@@ -1,7 +1,423 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="By enforcing temporal along with spatial consistencies, MBW carries out Out-of-Distribution (OOD) detection and auto-labeling at scale in a low-shot learning fashion.">
+  <meta name="keywords" content="MBW, Auto-labeling, low-shot-learning, Out-of-Distribution detection">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MBW: Multiview-bootstrapping in the Wild</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H1MB8ESQ73"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-H1MB8ESQ73');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://mosamdabhi.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://mv-nrsfm.github.io">
+            MV-NRSfM
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MBW: Multiview-bootstrapping in the Wild</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://mosamdabhi.github.io/">Mosam Dabhi</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://mightychaos.github.io/">Chaoyang Wang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/tim-clifford-a580964">Tim Clifford</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.laszlojeni.com/">László A. Jeni</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/ian-fasel-ba66012">Ian R. Fasel</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.adelaide.edu.au/directory/simon.lucey">Simon Lucey</a><sup>3</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Carnegie Mellon University,</span>
+            <span class="author-block"><sup>2</sup>Apple</span>,
+            <span class="author-block"><sup>3</sup>The University of Adelaide</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://openreview.net/forum?id=i1bFPSw42W0"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2210.01721"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/mosamdabhi/MBW"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://github.com/mosamdabhi/MBW-Data"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="graphics/mbw_1.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <span class="mbw"><i>MBW</i></span> obtains high-fidelity 2D and 3D landmark labels for deformable object categories from videos with only two or three uncalibrated, handheld cameras moving in the wild.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-chimpanzee">
+          <video poster="" id="chimpanzee" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/chimpanzee.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-colobus-monkey">
+          <video poster="" id="colobus-monkey" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/colobus-monkey.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-tiger">
+          <video poster="" id="tiger" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/tiger.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-flamingo">
+          <video poster="" id="flamingo" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/flamingo.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fish">
+          <video poster="" id="fish" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/fish.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-seahorse">
+          <video poster="" id="seahorse" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/seahorse.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+
+          <p> 
+            Labeling articulated objects in unconstrained settings have a wide variety of applications including entertainment, neuroscience, psychology, ethology, and many fields of medicine. Large offline labeled datasets do not exist for all but the most common articulated object categories (e.g., humans). 
+          </p>
+
+
+          <p>
+            Hand labeling these landmarks within a video sequence is a laborious task. Learned landmark detectors can help, but can be error-prone when trained from only a few examples. Multi-camera systems that train fine-grained detectors have shown significant promise in detecting such errors, allowing for self-supervised solutions that only need a small percentage of the video sequence to be hand-labeled. The approach, however, is based on calibrated cameras and rigid geometry, making it expensive, difficult to manage, and impractical in real-world scenarios. 
+          </p>
+
+          <p>
+            In this paper, we address these bottlenecks by combining a non-rigid 3D neural prior with deep flow to obtain high-fidelity landmark estimates from videos with only two or three uncalibrated, handheld cameras. With just a few annotations (representing 1-2% of the frames), we are able to produce 2D results comparable to state-of-the-art fully supervised methods, along with 3D reconstructions that are impossible with other existing approaches. 
+          </p>
+          <p>
+            Our Multi-view Bootstrapping in the Wild <i>(MBW)</i> approach demonstrates impressive results on standard human datasets, as well as tigers, cheetahs, fish, colobus monkeys, chimpanzees, and flamingos from videos captured casually in a zoo. We release the <a href="https://github.com/mosamdabhi/MBW">codebase</a> for MBW as well as this challenging <a href="https://github.com/mosamdabhi/MBW-Data"> zoo dataset </a> consisting image frames of tail-end distribution categories with their corresponding 2D, 3D labels generated from minimal human intervention.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <p><b>Coming soon...</b></p>
+        <div class="publication-video">
+          <iframe src=""
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">2D Keypoint and Bounding Box labeling</h2>
+
+          <p>
+            <b>Coming soon...</b>
+          </p>
+<!--           <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="graphics/mbw_1.mp4"
+                    type="video/mp4">
+          </video> -->
+        </div>
+      </div>
+
+      <!-- Matting. -->
+      <div class="column">
+        <h2 class="title is-3">3D Reconstruction labeling</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              <b>Coming soon...</b>
+            </p>
+<!--             <video id="video" controls playsinline height="100%">
+              <source src=""
+                      type="video/mp4">
+            </video> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">How does MBW work?</h2>
+        
+        <h3 class="title is-4">Temporal information (Optical flow)</h3>
+        <div class="content has-text-justified">
+          <p>
+            <b>Coming soon...</b>
+          </p>
+        </div>
+<!--         <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src=".jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+            <img src=".jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/> -->
+
+        <!-- Re-rendering. -->
+        <h3 class="title is-4">Spatial information induce Out-of-Distribution (O.O.D.) Detection</h3>
+        <div class="content has-text-justified">
+          <p>
+            <b>Coming soon...</b>
+          </p>
+        </div>
+<!--         <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src=".mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            <b>Coming soon...</b>
+            <!-- There's a lot of excellent work that was introduced low-shot labeling -->
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{dabhi2022mbw,
+  author       = {Dabhi, Mosam and Wang, Chaoyang and Clifford, Tim and Jeni, Laszlo and Fasel, Ian and Lucey, Simon},
+  title        = {MBW: Multi-view Bootstrapping in the Wild},
+  organization = {NeurIPS},
+  booktitle    = {Thirty-sixth Conference on Neural Information Processing Systems Datasets and Benchmarks Track},
+  year         = {2022}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://arxiv.org/pdf/2210.01721.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/mosamdabhi" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/multiview-bootstrapping-in-wild/multiview-bootstrapping-in-wild.github.io">source code</a> of this website, we just ask that you link back to this page in the footer. Please remember to remove the analytics code included in the header of the website which you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
